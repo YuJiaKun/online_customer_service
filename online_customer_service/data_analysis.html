@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数据分析 - 在线客服系统</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: #f8fafc;
+            height: 100vh;
+            overflow: hidden;
+        }
+        .dashboard-container {
+            height: 100vh;
+        }
+        .sidebar {
+            width: 240px;
+            background-color: #1e293b;
+            color: white;
+        }
+        .sidebar-menu-item {
+            padding: 0.75rem 1.5rem;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .sidebar-menu-item:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        .sidebar-menu-item.active {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-left: 3px solid #3b82f6;
+        }
+        .stat-card {
+            transition: all 0.3s;
+        }
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        .tab-active {
+            border-bottom: 2px solid #3b82f6;
+            color: #3b82f6;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container flex">
+        <!-- 左侧边栏 -->
+        <div class="sidebar flex flex-col">
+            <div class="p-4 border-b border-gray-700 flex items-center">
+                <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center mr-3">
+                    <i class="fas fa-headset text-blue-600"></i>
+                </div>
+                <div>
+                    <h2 class="font-semibold text-white">客服系统</h2>
+                    <div class="flex items-center text-xs text-green-400">
+                        <span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
+                        <span>管理员模式</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flex-1 overflow-y-auto">
+                <div class="py-4">
+                    <a href="admin_panel.html" class="sidebar-menu-item">
+                        <i class="fas fa-tachometer-alt mr-3"></i>
+                        <span>控制面板</span>
+                    </a>
+                    <a href="agent_management.html" class="sidebar-menu-item">
+                        <i class="fas fa-users mr-3"></i>
+                        <span>客服管理</span>
+                    </a>
+                    <a href="user_management.html" class="sidebar-menu-item">
+                        <i class="fas fa-user-friends mr-3"></i>
+                        <span>用户管理</span>
+                    </a>
+                    <a href="bot_settings.html" class="sidebar-menu-item">
+                        <i class="fas fa-robot mr-3"></i>
+                        <span>机器人设置</span>
+                    </a>
+                    <a href="knowledge_base.html" class="sidebar-menu-item">
+                        <i class="fas fa-book mr-3"></i>
+                        <span>知识库管理</span>
+                    </a>
+                    <a href="data_analysis.html" class="sidebar-menu-item active">
+                        <i class="fas fa-chart-bar mr-3"></i>
+                        <span>数据分析</span>
+                    </a>
+                    <a href="system_settings.html" class="sidebar-menu-item">
+                        <i class="fas fa-cog mr-3"></i>
+                        <span>系统设置</span>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="p-4 border-t border-gray-700">
+                <div class="flex items-center">
+                    <div class="w-10 h-10 rounded-full bg-red-500 flex items-center justify-center mr-3">
+                        <span class="text-white font-medium">王</span>
+                    </div>
+                    <div>
+                        <h3 class="font-medium text-white">王管理</h3>
+                        <p class="text-xs text-gray-400">系统管理员</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 主内容区域 -->
+        <div class="flex-1 overflow-y-auto">
+            <!-- 顶部导航 -->
+            <div class="bg-white border-b px-6 py-4 flex items-center justify-between">
+                <h1 class="text-2xl font-bold text-gray-800">数据分析</h1>
+                <div class="flex items-center space-x-4">
+                    <div class="relative">
+                        <i class="fas fa-bell text-gray-500 text-xl"></i>
+                        <div class="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full flex items-center justify-center">
+                            <span class="text-white text-xs">3</span>
+                        </div>
+                    </div>
+                    <div class="relative">
+                        <i class="fas fa-envelope text-gray-500 text-xl"></i>
+                        <div class="absolute -top-1 -right-1 w-4 h-4 bg-blue-500 rounded-full flex items-center justify-center">
+                            <span class="text-white text-xs">5</span>
+                        </div>
+                    </div>
+                    <div class="w-10 h-10 rounded-full bg-red-500 flex items-center justify-center">
+                        <span class="text-white font-medium">王</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 时间筛选 -->
+            <div class="p-6 bg-white border-b">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-4">
+                        <button class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                            今日
+                        </button>
+                        <button class="px-4 py-2 border rounded-lg text-gray-700 hover:bg-gray-100 focus:outline-none">
+                            本周
+                        </button>
+                        <button class="px-4 py-2 border rounded-lg text-gray-700 hover:bg-gray-100 focus:outline-none">
+                            本月
+                        </button>
+                        <button class="px-4 py-2 border rounded-lg text-gray-700 hover:bg-gray-100 focus:outline-none">
+                            自定义
+                        </button>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <button class="px-4 py-2 border rounded-lg text-gray-700 hover:bg-gray-100 focus:outline-none">
+                            <i class="fas fa-download mr-2"></i> 导出报表
+                        </button>
+                        <button class="px-4 py-2 border rounded-lg text-gray-700 hover:bg-gray-100 focus:outline-none">
+                            <i class="fas fa-sync-alt mr-2"></i> 刷新
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 数据概览 -->
+            <div class="p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="stat-card bg-white rounded-lg shadow p-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm text-gray-500 mb-1">总会话量</p>
+                            <h3 class="text-3xl font-bold text-gray-800">24,853</h3>
+                            <p class="text-xs text-green-500 mt-2"><i class="fas fa-arrow-up mr-1"></i> 12% 较上月</p>
+                        </div>
+                        <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center">
+                            <i class="fas fa-comments text-blue-600 text-xl"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="stat-card bg-white rounded-lg shadow p-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm text-gray-500 mb-1">平均会话时长</p>
+                            <h3 class="text-3xl font-bold text-gray-800">6分钟</h3>
+                            <p class="text-xs text-red-500 mt-2"><i class="fas fa-arrow-down mr-1"></i> 8% 较上月</p>
+                        </div>
+                        <div class="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center">
+                            <i class="fas fa-clock text-green-600 text-xl"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="stat-card bg-white rounded-lg shadow p-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm text-gray-500 mb-1">平均响应时间</p>
+                            <h3 class="text-3xl font-bold text-gray-800">28秒</h3>
+                            <p class="text-xs text-green-500 mt-2"><i class="fas fa-arrow-down mr-1"></i> 15% 较上月</p>
+                        </div>
+                        <div class="w-12 h-12 rounded-full bg-yellow-100 flex items-center justify-center">
+                            <i class="fas fa-bolt text-yellow-600 text-xl"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="stat-card bg-white rounded-lg shadow p-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm text-gray-500 mb-1">平均满意度</p>
+                            <h3 class="text-3xl font-bold text-gray-800">94%</h3>
+                            <p class="text-xs text-green-500 mt-2"><i class="fas fa-arrow-up mr-1"></i> 2% 较上月</p>
+                        </div>
+                        <div class="w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center">
+                            <i class="fas fa-smile text-purple-600 text-xl"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 图表区域 -->
+            <div class="p-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- 会话趋势图 -->
+                <div class="bg-white rounded-lg shadow p-6">
+                    <div class="flex items-center justify-between mb-6">
+                        <h3 class="font-semibold text-gray-800">会话趋势</h3>
+                        <div class="flex space-x-2">
+                            <button class="px-3 py-1 text-xs bg-blue-500 text-white rounded-full">日</button>
+                            <button class="px-3 py-1 text-xs bg-gray-200 text-gray-700 rounded-full">月</button>
+                        </div>
+                    </div>
+                    <div class="h-64 bg-gray-100 rounded-lg flex items-center justify-center">
+                        <div class="text-center">
+                            <i class="fas fa-chart-line text-gray-400 text-4xl mb-3"></i>
+                            <p class="text-gray-500">会话趋势图表</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 来源分布图 -->
+                <div class="bg-white rounded-lg shadow p-6">
+                    <div class="flex items-center justify-between mb-6">
+                        <h3 class="font-semibold text-gray-800">会话来源分布</h3>
+                        <div class="flex space-x-2">
+                            <button class="px-3 py-1 text-xs bg-blue-500 text-white rounded-full">饼图</button>
+                            <button class="px-3 py-1 text-xs bg-gray-200 text-gray-700 rounded-full">柱状图</button>
+                        </div>
+                    </div>
+                    <div class="h-64 bg-gray-100 rounded-lg flex items-center justify-center">
+                        <div class="text-center">
+                            <i class="fas fa-chart-pie text-gray-400 text-4xl mb-3"></i>
+                            <p class="text-gray-500">来源分布图表</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 客服绩效 -->
+            <div class="p-6">
+                <div class="bg-white rounded-lg shadow mb-6">
+                    <div class="px-6 py-4 border-b flex justify-between items-center">
+                        <h2 class="font-semibold text-lg text-gray-800">客服绩效排行</h2>
+                        <div class="flex space-x-2">
+                            <select class="border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                <option>按会话量</option>
+                                <option>按满意度</option>
+                                <option>按响应时间</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead>
+                                <tr class="bg-gray-50">
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">排名</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">客服</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">会话量</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">平均响应时间</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">满意度</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">解决率</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">1</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <div class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center mr-3">
+                                                <span class="text-white font-medium">张</span>
+                                            </div>
+                                            <div class="text-sm font-medium text-gray-900">张小明</div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">156</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">25秒</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                                <div class="bg-green-500 h-2.5 rounded-full" style="width: 98%"></div>
+                                            </div>
+                                            <span class="text-sm text-gray-600 ml-2">98%</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">95%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <div class="w-8 h-8 rounded-full bg-purple-500 flex items-center justify-center mr-3">
+                                                <span class="text-white font-medium">李</span>
+                                            </div>
+                                            <div class="text-sm font-medium text-gray-900">李小红</div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">142</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">28秒</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                                <div class="bg-green-500 h-2.5 rounded-full" style="width: 95%"></div>
+                                            </div>
+                                            <span class="text-sm text-gray-600 ml-2">95%</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">92%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">3</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <div class="w-8 h-8 rounded-full bg-yellow-500 flex items-center justify-center mr-3">
+                                                <span class="text-white font-medium">王</span>
+                                            </div>
+                                            <div class="text-sm font-medium text-gray-900">王小刚</div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">128</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">32秒</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                                <div class="bg-green-500 h-2.5 rounded-full" style="width: 90%"></div>
+                                            </div>
+                                            <span class="text-sm text-gray-600 ml-2">90%</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">88%</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- 用户满意度分析 -->
+                <div class="bg-white rounded-lg shadow">
+                    <div class="px-6 py-4 border-b">
+                        <h2 class="font-semibold text-lg text-gray-800">用户满意度分析</h2>
+                    </div>
+                    <div class="p-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div>
+                            <h3 class="font-medium text-gray-800 mb-4">满意度评分分布</h3>
+                            <div class="h-64 bg-gray-100 rounded-lg flex items-center justify-center">
+                                <div class="text-center">
+                                    <i class="fas fa-chart-bar text-gray-400 text-4xl mb-3"></i>
+                                    <p class="text-gray-500">满意度分布图表</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h3 class="font-medium text-gray-800 mb-4">满意度趋势</h3>
+                            <div class="h-64 bg-gray-100 rounded-lg flex items-center justify-center">
+                                <div class="text-center">
+                                    <i class="fas fa-chart-line text-gray-400 text-4xl mb-3"></i>
+                                    <p class="text-gray-500">满意度趋势图表</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>d-full">周</button>
+                            <button class="px-3 py-1 text-xs bg-gray-200 text-gray-700 rounded-full">月</button>
+                        </div>
+                    </div>
+                    <div class="h-64 bg-gray-100 rounded-lg flex items-center justify-center">
+                        <div class="text-center">
+                            <i class="fas fa-chart-line text-gray-400 text-4xl mb-3"></i>
+                            <p class="text-gray-500">会话趋势图表</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 来源分布图 -->
+                <div class="bg-white rounded-lg shadow p-6">
+                    <div class="flex items-center justify-between mb-6">
+                        <h3 class="font-semibold text-gray-800">会话来源分布</h3>
+                        <div class="flex space-x-2">
+                            <button class="px-3 py-1 text-xs bg-blue-500 text-white rounded-full">饼图</button>
+                            <button class="px-3 py-1 text-xs bg-gray-200 text-gray-700 rounded-full">柱状图</button>
+                        </div>
+                    </div>
+                    <div class="h-64 bg-gray-100 rounded-lg flex items-center justify-center">
+                        <div class="text-center">
+                            <i class="fas fa-chart-pie text-gray-400 text-4xl mb-3"></i>
+                            <p class="text-gray-500">来源分布图表</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 客服绩效 -->
+            <div class="p-6">
+                <div class="bg-white rounded-lg shadow mb-6">
+                    <div class="px-6 py-4 border-b flex justify-between items-center">
+                        <h2 class="font-semibold text-lg text-gray-800">客服绩效排行</h2>
+                        <div class="flex space-x-2">
+                            <select class="border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                <option>按会话量</option>
+                                <option>按满意度</option>
+                                <option>按响应时间</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead>
+                                <tr class="bg-gray-50">
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">排名</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">客服</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">会话量</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">平均响应时间</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">满意度</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">解决率</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">1</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <div class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center mr-3">
+                                                <span class="text-white font-medium">张</span>
+                                            </div>
+                                            <div class="text-sm font-medium text-gray-900">张小明</div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">156</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">25秒</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                                <div class="bg-green-500 h-2.5 rounded-full" style="width: 98%"></div>
+                                            </div>
+                                            <span class="text-sm text-gray-600 ml-2">98%</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">95%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <div class="w-8 h-8 rounded-full bg-purple-500 flex items-center justify-center mr-3">
+                                                <span class="text-white font-medium">李</span>
+                                            </div>
+                                            <div class="text-sm font-medium text-gray-900">李小红</div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">142</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">28秒</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                                <div class="bg-green-500 h-2.5 rounded-full" style="width: 95%"></div>
+                                            </div>
+                                            <span class="text-sm text-gray-600 ml-2">95%</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">92%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">3</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <div class="w-8 h-8 rounded-full bg-yellow-500 flex items-center justify-center mr-3">
+                                                <span class="text-white font-medium">王</span>
+                                            </div>
+                                            <div class="text-sm font-medium text-gray-900">王小刚</div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">128</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">32秒</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                                <div class="bg-green-500 h-2.5 rounded-full" style="width: 90%"></div>
+                                            </div>
+                                            <span class="text-sm text-gray-600 ml-2">90%</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">88%</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- 用户满意度分析 -->
+                <div class="bg-white rounded-lg shadow">
+                    <div class="px-6 py-4 border-b">
+                        <h2 class="font-semibold text-lg text-gray-800">用户满意度分析</h2>
+                    </div>
+                    <div class="p-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div>
+                            <h3 class="font-medium text-gray-800 mb-4">满意度评分分布</h3>
+                            <div class="h-64 bg-gray-100 rounded-lg flex items-center justify-center">
+                                <div class="text-center">
+                                    <i class="fas fa-chart-bar text-gray-400 text-4xl mb-3"></i>
+                                    <p class="text-gray-500">满意度分布图表</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h3 class="font-medium text-gray-800 mb-4">满意度趋势</h3>
+                            <div class="h-64 bg-gray-100 rounded-lg flex items-center justify-center">
+                                <div class="text-center">
+                                    <i class="fas fa-chart-line text-gray-400 text-4xl mb-3"></i>
+                                    <p class="text-gray-500">满意度趋势图表</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

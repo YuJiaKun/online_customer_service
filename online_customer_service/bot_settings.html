@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>机器人设置 - 在线客服系统</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: #f8fafc;
+            height: 100vh;
+            overflow: hidden;
+        }
+        .dashboard-container {
+            height: 100vh;
+        }
+        .sidebar {
+            width: 240px;
+            background-color: #1e293b;
+            color: white;
+        }
+        .sidebar-menu-item {
+            padding: 0.75rem 1.5rem;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .sidebar-menu-item:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        .sidebar-menu-item.active {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-left: 3px solid #3b82f6;
+        }
+        .stat-card {
+            transition: all 0.3s;
+        }
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        .tab-active {
+            border-bottom: 2px solid #3b82f6;
+            color: #3b82f6;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container flex">
+        <!-- 左侧边栏 -->
+        <div class="sidebar flex flex-col">
+            <div class="p-4 border-b border-gray-700 flex items-center">
+                <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center mr-3">
+                    <i class="fas fa-headset text-blue-600"></i>
+                </div>
+                <div>
+                    <h2 class="font-semibold text-white">客服系统</h2>
+                    <div class="flex items-center text-xs text-green-400">
+                        <span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
+                        <span>管理员模式</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flex-1 overflow-y-auto">
+                <div class="py-4">
+                    <a href="admin_panel.html" class="sidebar-menu-item">
+                        <i class="fas fa-tachometer-alt mr-3"></i>
+                        <span>控制面板</span>
+                    </a>
+                    <a href="agent_management.html" class="sidebar-menu-item">
+                        <i class="fas fa-users mr-3"></i>
+                        <span>客服管理</span>
+                    </a>
+                    <a href="user_management.html" class="sidebar-menu-item">
+                        <i class="fas fa-user-friends mr-3"></i>
+                        <span>用户管理</span>
+                    </a>
+                    <a href="bot_settings.html" class="sidebar-menu-item active">
+                        <i class="fas fa-robot mr-3"></i>
+                        <span>机器人设置</span>
+                    </a>
+                    <a href="knowledge_base.html" class="sidebar-menu-item">
+                        <i class="fas fa-book mr-3"></i>
+                        <span>知识库管理</span>
+                    </a>
+                    <a href="data_analysis.html" class="sidebar-menu-item">
+                        <i class="fas fa-chart-bar mr-3"></i>
+                        <span>数据分析</span>
+                    </a>
+                    <a href="system_settings.html" class="sidebar-menu-item">
+                        <i class="fas fa-cog mr-3"></i>
+                        <span>系统设置</span>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="p-4 border-t border-gray-700">
+                <div class="flex items-center">
+                    <div class="w-10 h-10 rounded-full bg-red-500 flex items-center justify-center mr-3">
+                        <span class="text-white font-medium">王</span>
+                    </div>
+                    <div>
+                        <h3 class="font-medium text-white">王管理</h3>
+                        <p class="text-xs text-gray-400">系统管理员</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 主内容区域 -->
+        <div class="flex-1 overflow-y-auto">
+            <!-- 顶部导航 -->
+            <div class="bg-white border-b px-6 py-4 flex items-center justify-between">
+                <h1 class="text-2xl font-bold text-gray-800">机器人设置</h1>
+                <div class="flex items-center space-x-4">
+                    <div class="relative">
+                        <i class="fas fa-bell text-gray-500 text-xl"></i>
+                        <div class="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full flex items-center justify-center">
+                            <span class="text-white text-xs">3</span>
+                        </div>
+                    </div>
+                    <div class="relative">
+                        <i class="fas fa-envelope text-gray-500 text-xl"></i>
+                        <div class="absolute -top-1 -right-1 w-4 h-4 bg-blue-500 rounded-full flex items-center justify-center">
+                            <span class="text-white text-xs">5</span>
+                        </div>
+                    </div>
+                    <div class="w-10 h-10 rounded-full bg-red-500 flex items-center justify-center">
+                        <span class="text-white font-medium">王</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 统计卡片 -->
+            <div class="p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="stat-card bg-white rounded-lg shadow p-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm text-gray-500 mb-1">机器人处理会话</p>
+                            <h3 class="text-3xl font-bold text-gray-800">8,542</h3>
+                            <p class="text-xs text-green-500 mt-2"><i class="fas fa-arrow-up mr-1"></i> 15% 较上月</p>
+                        </div>
+                        <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center">
+                            <i class="fas fa-robot text-blue-600 text-xl"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="stat-card bg-white rounded-lg shadow p-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm text-gray-500 mb-1">解决率</p>
+                            <h3 class="text-3xl font-bold text-gray-800">78%</h3>
+                            <p class="text-xs text-green-500 mt-2"><i class="fas fa-arrow-up mr-1"></i> 5% 较上月</p>
+                        </div>
+                        <div class="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center">
+                            <i class="fas fa-check-circle text-green-600 text-xl"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="stat-card bg-white rounded-lg shadow p-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm text-gray-500 mb-1">平均响应时间</p>
+                            <h3 class="text-3xl font-bold text-gray-800">2秒</h3>
+                            <p class="text-xs text-green-500 mt-2"><i class="fas fa-arrow-down mr-1"></i> 0.5秒 较上月</p>
+                        </div>
+                        <div class="w-12 h-12 rounded-full bg-yellow-100 flex items-center justify-center">
+                            <i class="fas fa-bolt text-yellow-600 text-xl"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="stat-card bg-white rounded-lg shadow p-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm text-gray-500 mb-1">转人工率</p>
+                            <h3 class="text-3xl font-bold text-gray-800">22%</h3>
+                            <p class="text-xs text-green-500 mt-2"><i class="fas fa-arrow-down mr-1"></i> 3% 较上月</p>
+                        </div>
+                        <div class="w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center">
+                            <i class="fas fa-random text-purple-600 text-xl"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 标签页导航 -->
+            <div class="px-6 border-b">
+                <div class="flex space-x-8">
+                    <button class="py-4 px-2 font-medium text-gray-800 tab-active">基本设置</button>
+                    <button class="py-4 px-2 font-medium text-gray-500 hover:text-gray-800">自动回复规则</button>
+                    <button class="py-4 px-2 font-medium text-gray-500 hover:text-gray-800">意图识别</button>
+                    <button class="py-4 px-2 font-medium text-gray-500 hover:text-gray-800">对话流程</button>
+                </div>
+            </div>
+            
+            <!-- 基本设置 -->
+            <div class="p-6">
+                <div class="bg-white rounded-lg shadow mb-6">
+                    <div class="px-6 py-4 border-b">
+                        <h2 class="font-semibold text-lg text-gray-800">机器人基本设置</h2>
+                    </div>
+                    <div class="p-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <div class="mb-4">
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">机器人名称</label>
+                                    <input type="text" value="智能助手" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">欢迎语</label>
+                                    <textarea class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" rows="3">您好，欢迎使用在线客服系统。我是您的专属客服小助手，有什么可以帮您解决的问题吗？</textarea>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">未识别回复</label>
+                                    <textarea class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" rows="3">抱歉，我没有理解您的问题。您可以换个方式描述，或者点击"转人工客服"按钮，有专业的客服为您解答。</textarea>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div class="mb-4">
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">机器人头像</label>
+                                    <div class="flex items-center">
+                                        <div class="w-16 h-16 rounded-full bg-blue-100 flex items-center justify-center mr-4">
+                                            <i class="fas fa-robot text-blue-600 text-2xl"></i>
+                                        </div>
+                                        <button class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300 focus:outline-none">
+                                            更换头像
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">工作时间</label>
+                                    <div class="flex items-center space-x-2">
+                                        <select class="border rounded px-2 py-1">
+                                            <option>全天候</option>
+                                            <option>自定义</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">转人工设置</label>
+                                    <div class="flex items-center">
+                                        <input type="checkbox" id="auto_transfer" class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" checked>
+                                        <label for="auto_transfer" class="ml-2 text-gray-700">无法解答时自动转人工</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-6 flex justify-end">
+                            <button class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300 focus:outline-none mr-2">
+                                取消
+                            </button>
+                            <button class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 focus:outline-none">
+                                保存设置
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 自动回复规则 -->
+                <div class="bg-white rounded-lg shadow mt-6">
+                    <div class="px-6 py-4 border-b flex justify-between items-center">
+                        <h2 class="font-semibold text-lg text-gray-800">常用回复设置</h2>
+                        <button class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                            <i class="fas fa-plus mr-1"></i> 添加回复
+                        </button>
+                    </div>
+                    <div class="p-6">
+                        <div class="mb-6">
+                            <div class="border rounded-lg p-4 mb-4 hover:shadow-md transition-shadow">
+                                <div class="flex justify-between items-center mb-3">
+                                    <h3 class="font-medium text-gray-800">问候语</h3>
+                                    <div class="flex space-x-2">
+                                        <button class="text-blue-600 hover:text-blue-900"><i class="fas fa-edit"></i></button>
+                                        <button class="text-red-600 hover:text-red-900"><i class="fas fa-trash"></i></button>
+                                    </div>
+                                </div>
+                                <p class="text-gray-600 text-sm mb-2">您好，欢迎使用在线客服系统。我是您的专属客服小助手，有什么可以帮您解决的问题吗？</p>
+                                <div class="flex items-center text-xs text-gray-500">
+                                    <span class="px-2 py-1 bg-blue-100 text-blue-800 rounded-full">自动发送</span>
+                                </div>
+                            </div>
+                            
+                            <div class="border rounded-lg p-4 mb-4 hover:shadow-md transition-shadow">
+                                <div class="flex justify-between items-center mb-3">
+                                    <h3 class="font-medium text-gray-800">订单查询</h3>
+                                    <div class="flex space-x-2">
+                                        <button class="text-blue-600 hover:text-blue-900"><i class="fas fa-edit"></i></button>
+                                        <button class="text-red-600 hover:text-red-900"><i class="fas fa-trash"></i></button>
+                                    </div>
+                                </div>
+                                <p class="text-gray-600 text-sm mb-2">您好，请提供您的订单号，我将为您查询订单状态。</p>
+                                <div class="flex items-center text-xs text-gray-500">
+                                    <span class="px-2 py-1 bg-gray-100 text-gray-800 rounded-full">关键词触发</span>
+                                </div>
+                            </div>
+                            
+                            <div class="border rounded-lg p-4 hover:shadow-md transition-shadow">
+                                <div class="flex justify-between items-center mb-3">
+                                    <h3 class="font-medium text-gray-800">结束语</h3>
+                                    <div class="flex space-x-2">
+                                        <button class="text-blue-600 hover:text-blue-900"><i class="fas fa-edit"></i></button>
+                                        <button class="text-red-600 hover:text-red-900"><i class="fas fa-trash"></i></button>
+                                    </div>
+                                </div>
+                                <p class="text-gray-600 text-sm mb-2">感谢您的咨询，如果还有其他问题，随时可以联系我们。祝您生活愉快！</p>
+                                <div class="flex items-center text-xs text-gray-500">
+                                    <span class="px-2 py-1 bg-gray-100 text-gray-800 rounded-full">手动触发</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
